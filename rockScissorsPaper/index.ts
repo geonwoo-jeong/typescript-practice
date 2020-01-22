@@ -19,13 +19,11 @@ const score = {
 let imageCoords: IRSP[keyof IRSP] = "0";
 let interval: number;
 
-const computerChoice = (imageCoords: IRSP[keyof IRSP]): string =>
-  String(
-    Object.keys(RSP).find(k => {
-      const key = k as keyof IRSP;
-      return RSP[key] === imageCoords;
-    })
-  );
+const computerChoice = (imageCoords: IRSP[keyof IRSP]) => {
+  return (Object.keys(RSP) as ["ROCK", "SCISSORS", "PAPER"]).find(k => {
+    return RSP[k] === imageCoords;
+  });
+};
 
 const intervalMaker = () => {
   interval = setInterval(() => {
@@ -53,7 +51,7 @@ const handleButtonClick = () => {
     button.addEventListener("click", event => {
       const myChoice = (event.target as Element).textContent as keyof IRSP;
       const myScore = score[myChoice];
-      const computerScore = score[computerChoice(imageCoords)];
+      const computerScore = score[computerChoice(imageCoords)!];
       const diff = myScore - computerScore;
 
       if (diff === 0) {
